@@ -1,6 +1,5 @@
 {
   "name": "todo-robin",
   "buildCommand": "echo 'Static site, no build needed'",
-  "outputDirectory": "ToDo",
-  "public": true
+  "outputDirectory": "ToDo"
 }
