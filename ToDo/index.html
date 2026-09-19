@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-row">
+            <h1>To-Do List</h1>
+            <div class="header-buttons">
+                <button id="help-btn" class="theme-toggle" title="Keyboard shortcuts">?</button>
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
+            </div>
+        </div>
+
+        <div class="input-row">
+            <input
+                type="text"
+                id="task-input"
+                placeholder="Enter a new task..."
+                autocomplete="off"
+            >
+            <select id="category-input" class="category-input">
+                <option value="">Category</option>
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Health">Health</option>
+                <option value="Other">Other</option>
+            </select>
+            <select id="priority-input" class="priority-input">
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+            </select>
+            <input
+                type="date"
+                id="duedate-input"
+                class="duedate-input"
+                title="Due date"
+            >
+            <button id="add-btn" title="Add task">+</button>
+        </div>
+
+        <div class="list-controls">
+            <div id="task-counter" class="task-counter"></div>
+            <div class="controls-right">
+                <button id="clear-completed-btn" class="secondary-btn icon-btn" title="Clear completed tasks">✓</button>
+            </div>
+        </div>
+
+        <input
+            type="text"
+            id="search-input"
+            placeholder="Search tasks..."
+            class="search-input"
+        >
+
+        <div class="filter-tabs">
+            <button class="filter-btn outstanding" data-filter="all" title="All tasks">📋 All</button>
+            <button class="filter-btn" data-filter="outstanding" title="Outstanding tasks">◉ Outstanding</button>
+            <button class="filter-btn" data-filter="completed" title="Completed tasks">✓ Done</button>
+        </div>
+
+        <div class="category-tabs">
+            <button class="category-btn active" data-category="" title="All categories">All</button>
+            <button class="category-btn" data-category="Work" title="Work tasks">💼 Work</button>
+            <button class="category-btn" data-category="Personal" title="Personal tasks">👤 Personal</button>
+            <button class="category-btn" data-category="Shopping" title="Shopping tasks">🛒 Shopping</button>
+            <button class="category-btn" data-category="Health" title="Health tasks">💪 Health</button>
+            <button class="category-btn" data-category="Other" title="Other tasks">📌 Other</button>
+        </div>
+
+        <ul id="task-list" class="task-list"></ul>
+
+        <!-- Help Modal -->
+        <div id="help-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Keyboard Shortcuts</h2>
+                <button class="modal-close" id="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="shortcut-group">
+                    <h3>Task Operations</h3>
+                    <div class="shortcut-item">
+                        <kbd>Enter</kbd>
+                        <span>Add a new task</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Double-click</kbd>
+                        <span>Edit task text</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Escape</kbd>
+                        <span>Cancel editing</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Click checkbox</kbd>
+                        <span>Mark as complete/incomplete</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Click ×</kbd>
+                        <span>Delete task</span>
+                    </div>
+                </div>
+                <div class="shortcut-group">
+                    <h3>Features</h3>
+                    <div class="shortcut-item">
+                        <kbd>🌙</kbd>
+                        <span>Toggle dark/light mode</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Category Tabs</kbd>
+                        <span>Filter tasks by category</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Filter Tabs</kbd>
+                        <span>Show all, outstanding, or done tasks</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
