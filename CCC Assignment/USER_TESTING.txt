@@ -1,0 +1,65 @@
+===============================================
+INVOICE & QUOTATION GENERATOR - QUICK USER TEST
+===============================================
+
+This is a simple 4-step test to verify the app is working correctly.
+
+STEP 1: Add a Client
+---------------------
+1. Open the app (index.html or https://todo-robin.vercel.app)
+2. Click "Clients" tab
+3. Click "+ Add Client"
+4. Fill in:
+   - Name: "John Smith"
+   - Email: "john@example.com"
+   - Address: "123 Main St"
+   - Phone: "555-1234"
+5. Click "Save"
+✓ Verify: Client appears in the clients list
+
+STEP 2: Add a Product
+---------------------
+1. Click "Products" tab
+2. Click "+ Add Product"
+3. Fill in:
+   - Name: "Web Design Service"
+   - Unit Price: "500"
+   - Description: "Professional website design"
+4. Click "Save"
+✓ Verify: Product appears in the products list
+
+STEP 3: Create a Quotation & Convert to Invoice
+------------------------------------------------
+1. Click "Quotations" tab
+2. Click "+ New Quotation"
+3. Fill in:
+   - Client: Select "John Smith"
+   - Tax Rate: "10"
+4. Click "+ Add Line Item"
+5. Fill in:
+   - Product: Select "Web Design Service"
+   - Qty: "2"
+   - Price: Auto-fills to "500"
+6. Verify totals update: Subtotal = 1000, Tax = 100, Total = 1100
+7. Click "Save Quotation"
+8. Click "Convert to Invoice" on the quotation
+✓ Verify: Invoice appears with auto-generated number (INV-2026-001)
+
+STEP 4: Download Invoice & Test Status
+---------------------------------------
+1. Click "Invoices" tab
+2. Click "View" on the invoice
+3. In preview, click "Download PDF"
+✓ Verify: PDF file downloads with name "INV-2026-001.pdf"
+4. Close preview and click "Status"
+5. Change status to "Sent" and click "Save"
+✓ Verify: Status badge updates to "Sent"
+
+===============================================
+ALL TESTS PASSED? App is working correctly! ✓
+===============================================
+
+Notes:
+- All data is saved to browser storage (persists after page reload)
+- Toggle theme (🌙/☀️) to test dark mode
+- Check "Ageing Report" tab to see unpaid invoices grouped by age
