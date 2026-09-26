@@ -1,5 +1,5 @@
 {
-  "name": "todo-robin",
+  "name": "invoice-quotation-generator",
   "buildCommand": "echo 'Static site, no build needed'",
-  "outputDirectory": "ToDo"
+  "outputDirectory": "CCC Assignment"
 }
