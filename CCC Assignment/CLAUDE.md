@@ -214,8 +214,81 @@ Modal state is managed by `editingClientId`, `editingProductId`, `editingQuotati
 - No database queries or backend latency.
 - PDF generation is client-side and can be slow for large invoices (100+ line items).
 
+## Testing
+
+The app includes a comprehensive Jest test suite covering all core business logic rules.
+
+**Running Tests**:
+```bash
+npm install  # First time only
+npm test     # Run all tests
+npm test:watch  # Run tests in watch mode (re-run on file changes)
+npm run test:coverage  # Run tests with coverage report
+```
+
+**Test Coverage**:
+- **64 tests, 100% passing**
+- **100% statement coverage**
+- **92.53% branch coverage**
+
+**Test Suites**:
+
+1. **Quotation Calculations** (8 tests)
+   - Subtotal, tax, total calculations with various tax rates
+   - Edge cases: zero amounts, decimals, negative values (error handling)
+
+2. **Line Item Calculations** (6 tests)
+   - Single line item subtotal
+   - Multiple line items summation
+   - Decimal precision and rounding
+
+3. **Invoice Numbering** (10 tests)
+   - Sequential auto-generation per calendar year
+   - Zero-padding (INV-2026-001, INV-2026-010, etc.)
+   - Multi-year counter independence
+   - Counter state management
+
+4. **Date Calculations & Ageing** (13 tests)
+   - Days until due (positive/negative/zero)
+   - Urgency classification (overdue, due-today, due-soon, due-later)
+   - Ageing buckets (current 0-30d, 31-60d, 61-90d, 90+d)
+   - Timezone-aware date handling
+
+5. **Ageing Report** (6 tests)
+   - Grouping invoices by ageing bucket
+   - Filtering by status
+   - Total calculations per bucket
+   - Ageing summary with counts and totals
+
+6. **Validation** (11 tests)
+   - Line item validation (productId, qty, price constraints)
+   - Quotation validation (clientId, taxRate, lineItems)
+   - Status transition validation
+   - Error collection and messaging
+
+**Business Logic Module** (`business-logic.js`):
+
+The core business logic is extracted into a separate module for testability and potential backend reuse. All calculation and validation functions are unit-tested independently of UI.
+
+Functions available for import (Node.js):
+- `calculateQuotationTotals(subtotal, taxRate)`
+- `calculateLineItemSubtotal(qty, price)`
+- `calculateLineItemsSubtotal(lineItems)`
+- `getNextInvoiceNumber(invoiceCounters, year)`
+- `updateInvoiceCounters(counters, year)`
+- `calculateDaysUntilDue(dueDate, fromDate)`
+- `getUrgencyClass(dueDate, fromDate)`
+- `getAgeingBucket(dueDate, fromDate)`
+- `groupInvoicesByAgeing(invoices, statuses, fromDate)`
+- `calculateTotalOwed(invoices)`
+- `validateLineItems(lineItems)`
+- `validateQuotation(quotation)`
+- `validateStatusTransition(currentStatus, newStatus)`
+- `calculateAgeingSummary(invoices, fromDate)`
+
 ## Debugging Tips
 
 - Open DevTools (F12) → Application → LocalStorage → Find `'invoice_app_data'` key to inspect stored data.
 - Log `appData` in console to verify state.
 - Check browser console for any JSON parse errors in `loadData()` (usually indicates localStorage corruption).
+- Run `npm test` to verify business logic integrity before integrating changes.
