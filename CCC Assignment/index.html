@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice & Quotation Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Invoice & Quotation Generator</h1>
+            <div class="header-actions">
+                <button id="theme-toggle" class="icon-btn" title="Toggle dark mode">🌙</button>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="clients">Clients</button>
+            <button class="tab-btn" data-tab="products">Products</button>
+            <button class="tab-btn" data-tab="quotations">Quotations</button>
+            <button class="tab-btn" data-tab="invoices">Invoices</button>
+            <button class="tab-btn" data-tab="ageing">Ageing Report</button>
+        </nav>
+
+        <!-- CLIENTS TAB -->
+        <div id="clients-tab" class="tab-content active">
+            <div class="section-header">
+                <h2>Manage Clients</h2>
+                <button id="add-client-btn" class="primary-btn">+ Add Client</button>
+            </div>
+            <div id="clients-list" class="list-container"></div>
+        </div>
+
+        <!-- PRODUCTS TAB -->
+        <div id="products-tab" class="tab-content">
+            <div class="section-header">
+                <h2>Product/Service Catalogue</h2>
+                <button id="add-product-btn" class="primary-btn">+ Add Product</button>
+            </div>
+            <div id="products-list" class="list-container"></div>
+        </div>
+
+        <!-- QUOTATIONS TAB -->
+        <div id="quotations-tab" class="tab-content">
+            <div class="section-header">
+                <h2>Quotations</h2>
+                <button id="new-quotation-btn" class="primary-btn">+ New Quotation</button>
+            </div>
+            <div id="quotations-list" class="list-container"></div>
+        </div>
+
+        <!-- INVOICES TAB -->
+        <div id="invoices-tab" class="tab-content">
+            <div class="section-header">
+                <h2>Invoices</h2>
+            </div>
+            <div id="invoices-list" class="list-container"></div>
+        </div>
+
+        <!-- AGEING REPORT TAB -->
+        <div id="ageing-tab" class="tab-content">
+            <div class="section-header">
+                <h2>Ageing Report</h2>
+            </div>
+            <div id="ageing-report" class="list-container"></div>
+        </div>
+    </div>
+
+    <!-- CLIENT MODAL -->
+    <div id="client-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="client-modal-title">Add Client</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="client-form">
+                <div class="form-group">
+                    <label for="client-name">Name *</label>
+                    <input type="text" id="client-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="client-email">Email</label>
+                    <input type="email" id="client-email">
+                </div>
+                <div class="form-group">
+                    <label for="client-address">Address</label>
+                    <input type="text" id="client-address">
+                </div>
+                <div class="form-group">
+                    <label for="client-phone">Phone</label>
+                    <input type="tel" id="client-phone">
+                </div>
+                <div class="form-group">
+                    <label for="client-taxid">Tax ID</label>
+                    <input type="text" id="client-taxid">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn close-modal">Cancel</button>
+                    <button type="submit" class="primary-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div id="product-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="product-modal-title">Add Product</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="product-form">
+                <div class="form-group">
+                    <label for="product-name">Name *</label>
+                    <input type="text" id="product-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-price">Unit Price *</label>
+                    <input type="number" id="product-price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Description</label>
+                    <textarea id="product-description"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn close-modal">Cancel</button>
+                    <button type="submit" class="primary-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- QUOTATION BUILDER MODAL -->
+    <div id="quotation-modal" class="modal hidden">
+        <div class="modal-content wide">
+            <div class="modal-header">
+                <h3 id="quotation-modal-title">New Quotation</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="quotation-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quotation-client">Client *</label>
+                        <select id="quotation-client" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quotation-tax-rate">Tax Rate (%) *</label>
+                        <input type="number" id="quotation-tax-rate" value="10" step="0.01" required>
+                    </div>
+                </div>
+
+                <h4>Line Items</h4>
+                <div id="line-items-container">
+                    <div class="line-item-template hidden">
+                        <div class="line-item">
+                            <select class="line-product" required></select>
+                            <input type="number" class="line-qty" value="1" min="1" required>
+                            <input type="number" class="line-price" step="0.01" required>
+                            <span class="line-subtotal">0.00</span>
+                            <button type="button" class="remove-line-btn">×</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="add-line-item-btn" class="secondary-btn">+ Add Line Item</button>
+
+                <div class="quotation-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="quotation-subtotal">0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax:</span>
+                        <span id="quotation-tax">0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="quotation-total">0.00</span>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn close-modal">Cancel</button>
+                    <button type="submit" class="primary-btn">Save Quotation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- INVOICE PREVIEW MODAL -->
+    <div id="invoice-preview-modal" class="modal hidden">
+        <div class="modal-content wide">
+            <div class="modal-header">
+                <h3 id="invoice-preview-title">Invoice Preview</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div id="invoice-preview-content" class="invoice-preview"></div>
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn close-modal">Close</button>
+                <button id="download-invoice-btn" class="primary-btn">📥 Download PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INVOICE STATUS MODAL -->
+    <div id="invoice-status-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Update Invoice Status</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="invoice-status-form">
+                <div class="form-group">
+                    <label for="invoice-status-select">Status *</label>
+                    <select id="invoice-status-select" required>
+                        <option value="Draft">Draft</option>
+                        <option value="Sent">Sent</option>
+                        <option value="Paid">Paid</option>
+                        <option value="Overdue">Overdue</option>
+                    </select>
+                </div>
+                <div class="form-group" id="paid-date-group" style="display: none;">
+                    <label for="invoice-paid-date">Payment Date</label>
+                    <input type="date" id="invoice-paid-date">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn close-modal">Cancel</button>
+                    <button type="submit" class="primary-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
