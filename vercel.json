@@ -1,5 +1,4 @@
 {
-  "name": "invoice-quotation-generator",
   "buildCommand": "echo 'Static site, no build needed'",
   "outputDirectory": "CCC Assignment"
 }
