@@ -1,0 +1,21 @@
+{
+  "name": "invoice-quotation-generator",
+  "version": "1.0.0",
+  "description": "Invoice & Quotation Generator - Business app for managing invoices and quotations",
+  "main": "business-logic.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "keywords": [
+    "invoice",
+    "quotation",
+    "business"
+  ],
+  "author": "",
+  "license": "MIT"
+}
